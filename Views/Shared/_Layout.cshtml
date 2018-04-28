@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/cssbundle")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- <link rel="stylesheet" type="text/css" href="~/Content/Site.css">-->
+</head>
+<body>
+    <!--  Render the partial view of the navbar, we can pass a model as a 2nd argument:   ('_NavBar',Model.Submission) -->
+    @Html.Partial("_NavBar2"); <!-- experiencing issue with expected LoginViewModel but got submissions list-->
+  
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="col-12"></div>
+            <p>&copy; @DateTime.Now.Year - Community Trust </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/lib")
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/js")
+
+</body>
+</html>

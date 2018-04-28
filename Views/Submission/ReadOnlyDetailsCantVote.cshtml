@@ -1,0 +1,103 @@
+﻿@model Community_Trust.Models.Submission
+@{
+    ViewBag.Title = Model.nameOfCause;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.nameOfCause </h2>
+<div class="container">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="detailsBox">
+                <div class="regionDetails"><p>@Model.region</p></div>
+                <div class="socialIconsDetails"><a href="@Model.vidLink"><img src="~/Content/Images/youtube.png" href class="img-circle uTubeicon" alt="Youtube" height="50" in></a><a href="@Model.facebookUrl"><img src="~/Content/Images/facebook.png" href class="img-circle fbicon" alt="facebook" height="50" in></a><a href="https://www.instagram.com/?hl=en"><img src="~/Content/Images/instagram.png" class="img-circle insticon" alt="instagram" height="50"></a><a href="@Model.twittUrl"><img src="~/Content/Images/twitter.png" class="img-circle twitticon" alt="Twitter" height="50"></a></div>
+                <div class="subNameDetails">@Model.nameOfCause</div>
+                <div class="subByDetails">Submitted by @Model.submittedBy</div>
+                <div class="imgDetails"><img src="~/Content/Images/user-default.png" class="img-circle" alt="Cinque Terre" height="100"></div>
+                <div class="orgTypeDetails">@Model.organisationType</div>
+                <div class="grantCatDetails"><p>Category:$@Model.grantCategory</p></div>
+                <div class="descDetails">@Model.descriptionOfCause</div>
+                <div class="useOfDetails">Use of Funds: @Model.useOfFunds</div>
+                <div class="numVotesDetailsVoted">@Model.internalVotes votes</div>
+                <div class="notesDetails"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Click to View other notes</button></div>
+                <div class="votedMessageDetails">Thank you for your vote.</div>
+                <div class="websiteDetailsNoVote"><a href="@Model.causeWebsite">Website</></div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+@Html.ActionLink("Back", "ShowAllSubmissions", "Submission");
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Notes on @Model.nameOfCause</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Model.notes</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('.imgDetails').hover(function () {
+                $('.subByDetails').css("visibility", "visible");
+                console.log("Hoverin");
+            }, function () {
+                $('.subByDetails').css("visibility", "hidden");
+                console.log("Hoverout");
+            })
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            
+
+
+            $(".js-vote").on("click", function () {
+                console.log("clicked vote");
+                var votebutton = $(this);
+                var votedId = $(this).data('assigned-id');
+                // var mySub = "";
+                bootbox.confirm("Are you sure you want to vote for this Submission", function (result) {
+                    if (result) {
+
+                        console.log("vote clicked " + votedId);
+                        $.ajax({
+                            url: "/api/submissions/voteRoute/" + votedId,
+                            method: "PUT",
+                            success: function () {
+                                console.log("Success READ");
+                                $(votebutton).css("visibility", "hidden");
+                                var currentVotes = parseInt($('.numVotesDetails').html());
+                                console.log(currentVotes + 1);
+                                $(".numVotesDetails").text(currentVotes + 1);
+                                $(".numVotesDetails").css("visibility", "visible");
+                                $("")
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
+
+}

@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Community_Trust.Models.Submission>
+@{ 
+    ViewBag.Title = "ShowAllSubmissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Current Submissions</h2>
+<div class="container">
+    <div class="row">
+        @foreach (var submission in Model)
+        {
+            <div class="col-lg-3" id="subContainer">
+                <div class="voteBox">
+                        <div class="region">@submission.region</div>
+                        <div class="socialIcons"><a href="@submission.vidLink"><img src="~/Content/Images/youtube.png" href class="img-circle uTubeicon" alt="Youtube" height="30" in></a><a href="@submission.facebookUrl"><img src="~/Content/Images/facebook.png" href class="img-circle fbicon" alt="facebook" height="30" in></a><a href="https://www.instagram.com/?hl=en"><img src="~/Content/Images/instagram.png" class="img-circle insticon" alt="instagram" height="30"></a><a href="@submission.twittUrl"><img src="~/Content/Images/twitter.png" class="img-circle twitticon" alt="Twitter" height="30"></a></div>
+                        <div class="subBy">Submitted by @submission.submittedBy</div>
+                        <div><img src="~/Content/Images/user-default.png" class="img-circle subpic" alt="Cinque Terre" height="80"></div>
+                        <div class="subName lead"  data-toggle="tooltip" title="Click me to learn more">@Html.ActionLink(submission.nameOfCause, "Details", "Submission", new { id= submission.subKey}, null)</div>
+                        <div class="desc"><p class="descP" data-toggle="tooltip" title="Click me to learn more">@Html.ActionLink(submission.descriptionOfCause, "Details", "Submission", new { id = submission.subKey }, null)</p></div>
+                       <!--<div class="useOf">submission.useOfFunds</div>  <p class="descP"> </p> -->
+                        
+                        @if (submission.hasVotedFor == false)
+                        {
+                            <div class="numVotes">@submission.internalVotes votes</div>
+                            <div class="voteBtn" style=""><button class="btn btn-primary btn-lg js-vote" value="Vote" data-assigned-id="@submission.subKey">Vote</button></div>
+                        }
+                        else
+                        {
+                            <div class="numVotesVoted">@submission.internalVotes votes</div>
+                            <div class="votedMessageAllSubs">Thanks for your vote</div>
+                            
+                        }
+                        <div class="grantCat">$@submission.grantCategory</div> 
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+@Html.ActionLink("Home", "Index", "Home")
+
+<!--  JQuert to call API ,, pontentially added a filter to the jquery selector to reduce the amount of memory used
+      $("#subs").on("click",".js-delete", function () { 
+    -->
+@section scripts{
+    <script>
+        
+
+        $(function () {
+            $('.subpic').hover(function () {
+                $('.subBy').css("visibility","visible");
+                console.log("Hoverin");
+            }, function () {
+                $('.subBy').css("visibility", "hidden");
+                console.log("Hoverout");
+            })
+        })
+</script>
+
+
+    <script>
+        $(document).ready(function () {
+
+           $('.numVotes').css("visibility","hidden");
+            // vote for sub api call
+            $(".js-vote").on("click", function () {
+                console.log("clicked vote");
+                 var votebutton = $(this);
+                 var votedId = $(this).data('assigned-id');
+                // var mySub = "";
+                 bootbox.confirm("Are you sure you want to vote for this Submission", function (result) {
+                     if (result) {
+
+                         console.log("vote clicked " + votedId);
+                         $.ajax({
+                             url: "/api/submissions/voteRoute/" + votedId,
+                              method: "PUT",
+                              success: function () {
+                                  console.log("Success READ");
+                                  $(votebutton).css("visibility", "hidden");
+                                  var currentVotes = parseInt($(votebutton).parent().siblings(".numVotes").html());
+                                  console.log(currentVotes + 1);
+                                  $(votebutton).parent().siblings(".numVotes").text(currentVotes + 1);
+                                  $(votebutton).parent().siblings(".numVotes").css("visibility", "visible");
+
+                                
+                                  
+                              }
+                          }); 
+                     }
+                 });
+
+             });
+         });
+</script>
+
+    }
+
+<!--<ul id="subs">
+                        <li class="region">submission.region</li>
+                        <li class="socialIcons"><a href="submission.facebookUrl"><img src="~/Content/Images/facebook.png" href class="img-circle fbicon" alt="facebook" height="30"in></a><a href="hts://www.instagram.com/?hl=en"><img src="~/Content/Images/instagram.png" class="img-circle insticon" alt="instagram" height="30"></a><a href="submission.twittUrl"><img src="~/Content/Images/twitter.png" class="img-circle twitticon" alt="Twitter" height="30"></a></li>
+                        <li><img src="~/Content/Images/user-default.png" class="img-circle subpic" alt="Cinque Terre" height="80"></li>
+                        <li class="subBy">submission.submittedBy</li>
+                        <li class="subName lead ">Html.ActionLink(submission.nameOfCause, "Details", "Submission", new { id= submission.subKey}, null)</li>
+                        <li class="grantCat">$submission.grantCategory</li> 
+                        <li class="desc">submission.descriptionOfCause</li>
+                        <li class="useOf">submission.useOfFunds</li>
+                        <li class="numVotes">submission.internalVotes</li>
+                        <li class="vidlink"></li>
+                        <li class="voteBtn"><button class="btn btn-primary btn-lg js-vote" value="Vote" data-assigned-id="submission.subKey">Vote</button></li>
+                    </ul>-->

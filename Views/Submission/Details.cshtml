@@ -1,0 +1,33 @@
+﻿@model Community_Trust.Models.Submission
+@{
+    ViewBag.Title = Model.nameOfCause;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.nameOfCause</h2>
+
+<div class="container">
+    <div class="row">
+        
+            <div class="col-lg-3">
+                <div class="voteBox">
+                    <ul>
+                        <li><img src="~/Content/Images/user-default.png" class="img-circle" alt="Cinque Terre" height="50"></li>
+                        <li>@Model.nameOfCause</li>
+                        <li>@Model.organisationType</li>
+                        <li>@Model.grantCategory</li>
+                        <li>@Model.descriptionOfCause</li>
+                        <li>@Model.useOfFunds</li>
+                        <li>@Model.region</li>
+                        <li>@Model.internalVotes</li>
+                        <li><button class="btn btn-primary btn-lg" onclick="">Vote</button></li>                   
+                        <li>@Html.ActionLink("Edit", "Edit", "Submission", new { id = Model.subKey }, null)</li>
+                    </ul>
+                </div>
+            </div>
+
+
+        
+    </div>
+</div>
+@Html.ActionLink("Back", "ShowAllSubmissions", "Submission");

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Community Trust</h1>
+    <p class="lead">Choose a cause that means something to you, submit a detailed description, promote the vote on social media and then get voting.</p>
+    
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Learn about how the grant system works</h2>
+        <p>Follow the link below for detailed information on how our system works and what we do to ensure fairness</p>
+        <p><a class="btn btn-default">@Html.ActionLink("Learn More", "About", "Home") &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            Choose your charitable cause and tell us it's story and why people should cast their vote.
+        </p>
+        <p><a class="btn btn-default">@Html.ActionLink("Submit a cause", "NewCause", "Submission") &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Cast your Vote</h2>
+        <p>Have a look at active submissions and cast your vote</p>
+        <p><a class="btn btn-default">@Html.ActionLink("Cast your Vote", "ShowAllSubmissions", "Submission") &raquo;</a></p>
+    </div>
+    @ViewData["Success"]
+</div>

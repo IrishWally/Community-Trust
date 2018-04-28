@@ -1,0 +1,43 @@
+﻿@model Community_Trust.ViewModels.SubmissionsViewModel
+@{
+    ViewBag.Title = "SubmissionsByGrantCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SubmissionsByGrantCategory</h2>
+<!--  render the list of customers using Razor-->
+@Model.User
+
+@{ 
+    var className = Model.Submissions.Count > 5 ? "busy" : null; <!--add a html class to Submissions if there is more than :  this technizque can be used to render any attributes dynamically5-->
+}
+<div class="showsubmissions">
+    <div class="container">
+        <div class="row">
+            <!-- a loop for the list of submissions created in the SubmissionsViewModel-->
+            @foreach (var submission in Model.Submissions)
+            {
+                <div class="col-lg-3">
+                    <div class="voteBox">
+                        <ul>
+                            <li>@submission.submittedBy</li>
+                            <li><img src="~/Content/Images/user-default.png" class="img-circle" alt="Cinque Terre" height="50"></li>
+                            <li>@submission.nameOfCause</li>
+                            <li>@submission.organisationType</li>
+                            <li>@submission.grantCategory</li>
+                            <li>@submission.descriptionOfCause</li>
+                            <li>@submission.useOfFunds</li>
+                            <li>@submission.region</li>
+                            <li>@submission.internalVotes</li>
+                            <li><button class="btn btn-primary btn-lg" onclick=""></button></li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @Html.ActionLink("Home", "Index", "Home");
+
+
+</div>
+

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Community_Trust.Models.AdminUser>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+@foreach (var aduser in Model)
+{
+
+    @aduser.Username
+    @aduser.AdminType.TypeName
+}
+
+
+
+

@@ -1,0 +1,125 @@
+﻿@model Community_Trust.Models.Submission
+@{
+    ViewBag.Title = "NewCause";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Cause @ViewData["Fail"] @ViewData["Success"]</h2>
+@using (Html.BeginForm("Save", "Submission"))
+{
+
+    <div class="form-group">
+        <span class="col-form-label col-form-label-lg">@Html.LabelFor(submission => submission.submittedBy, new { @class = "col-sm-4 control-label" })</span>
+        <div class="col-sm-8 ">@Html.TextBoxFor(submission => submission.submittedBy, new { @class = "form-text-input" , @style = "width:70%" }) @Html.ValidationMessageFor(submission => submission.submittedBy)</div>
+    </div>
+
+    <div class="form-group">
+         <span class="col-form-label col-form-label-lg">@Html.LabelFor(submission => submission.nameOfCause, new { @class = "col-sm-4 control-label" })</span>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(submission => submission.nameOfCause, new { @class = "form-text-input", @style = "width:70%" }) @Html.ValidationMessageFor(submission => submission.nameOfCause)
+        </div>
+    </div>
+    <div class="form-group">
+
+        <span class="col-form-label col-form-label-lg">@Html.LabelFor(submission => submission.organisationType, new { @class = "col-sm-4 control-label" })</span>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(submission => submission.organisationType, new { @class = "form-text-input", @style = "width:70%" }) @Html.ValidationMessageFor(submission => submission.organisationType)
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-form-label col-form-label-lg"> @Html.LabelFor(submission => submission.descriptionOfCause, new { @class = "col-sm-4 control-label" })</span>
+        <div class="col-sm-8">
+            @Html.TextAreaFor(submission => submission.descriptionOfCause, new { @class = "form-text-input", @style = "width:70%" }) @Html.ValidationMessageFor(submission => submission.descriptionOfCause)
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-form-label col-form-label-lg"> @Html.LabelFor(submission => submission.grantCategory, new { @class = "col-sm-4 control-label" })</span>
+            <div class="col-sm-8">
+                @Html.DropDownListFor(submission => submission.grantCategory, new List<SelectListItem>
+
+            {
+
+            new SelectListItem() { Text = "5000 Euro", Value = "5000" },
+            new SelectListItem() { Text = "1000 Euro", Value = "1000" },
+            new SelectListItem() { Text = "500 Euro", Value = "500" },
+            }, new { id = "grantlist", @onchange = "", @class = "form-control" }) @Html.ValidationMessageFor(submission => submission.grantCategory)
+        </div>
+    </div>
+        <div class="form-group">
+            @Html.LabelFor(submission => submission.pitch, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextAreaFor(submission => submission.pitch, new { @class = "form-text-input", @style = "width:70%" }) @Html.ValidationMessageFor(submission => submission.pitch)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(submission => submission.vidLink, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(submission => submission.vidLink, new { @class = "form-text-input", @style = "width:70%" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(submission => submission.facebookUrl, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(submission => submission.facebookUrl, new { @class = "form-text-input", @style = "width:70%" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(submission => submission.twittUrl, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(submission => submission.twittUrl, new { @class = "form-text-input", @style = "width:70%" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(submission => submission.useOfFunds, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(submission => submission.useOfFunds, new { @class = "form-text-input", @style="width:70%"}) @Html.ValidationMessageFor(submission => submission.useOfFunds)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(submission => submission.region, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.DropDownListFor(submission => submission.region, new List<SelectListItem>
+                             {
+                                new SelectListItem() { Text = "Dublin", Value = "Dublin" },
+                                new SelectListItem() { Text = "Belfast", Value = "Belfast" },
+                                new SelectListItem() { Text = "Cork", Value = "Cork" },
+                                new SelectListItem() { Text = "London ", Value = "London" }
+                       }, new { id = "roomList", @onchange = "", @class = "form-control" }) @Html.ValidationMessageFor(submission => submission.region)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(submission => submission.causeWebsite, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(submission => submission.causeWebsite, new { @class = "form-text-input" }) @Html.ValidationMessageFor(submission => submission.causeWebsite)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-default" type="button" id="notesButton" style="height:100%" data-toggle="collapse" data-target="#notesBox" aria-expanded="false" aria-controls="notesBox">Add other notes</button>  <!-- Html.LabelFor(submission => submission.notes, new { class = "col-sm-4 control-label" })-->
+                <div class="col-sm-8, collapse" id="notesBox">
+                    <div class="card card-body" style="width:150%">@Html.TextAreaFor(submission => submission.notes, new { @class = "form-text-input" , @style="width:200%, resize:both, max-width:450px", @rows="10"}) @Html.ValidationMessageFor(submission => submission.notes)</div>
+                </div>
+            </div>
+            <div class="form-group, row">
+                <div class="col-sm-4">
+                    <!-- Html.HiddenFor(submission => submission.subKey)-->
+
+                    <button id="submitType" type="submit" value="Submit Now" class="btn btn-primary">Submit Cause</button>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(submission => submission.termsAndConds) 
+                            @Html.LabelFor(submission => submission.termsAndConds)
+                        @Html.ValidationMessageFor(submission => submission.termsAndConds)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        }
+
+    
